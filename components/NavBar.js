@@ -6,7 +6,7 @@ export default function NavBar() {
   const router = useRouter();
   const handleMenu = () => {};
   return (
-    <nav className="w-full  z-40 p-2  bg-white">
+    <nav className="w-full  z-40 p-2 h-16 bg-white absolute">
       <div className="flex justify-between">
         <MenuDrawer />
         <div className="w-full flex justify-center">

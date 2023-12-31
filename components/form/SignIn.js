@@ -12,7 +12,7 @@ function SignIn() {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const { user } = useContext(AppContext);
-  const router = useRouter();
+  const router=useRouter()
   useEffect(() => {
     if (user !== null) {
     }
@@ -24,12 +24,12 @@ function SignIn() {
     setEmailError("");
     if (!password) return setPasswordError("Please Enter Password");
     setPasswordError("");
-    setIsLoading(true);
+
     await signInWithEmailAndPassword(Auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log(user);
-        setUser(user);
+        router.push('/dashboard')
+        
       })
       .catch((error) => console.log(error.code, error.message));
   };
