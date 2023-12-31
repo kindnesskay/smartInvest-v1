@@ -11,11 +11,15 @@ function SignIn() {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const { user } = useContext(AppContext);
+  const { user,setIsLoading } = useContext(AppContext);
   const router=useRouter()
   useEffect(() => {
     if (user !== null) {
+      router.push('/dashboard')
     }
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
   }, []);
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -24,7 +28,7 @@ function SignIn() {
     setEmailError("");
     if (!password) return setPasswordError("Please Enter Password");
     setPasswordError("");
-
+    setIsLoading(true)
     await signInWithEmailAndPassword(Auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;

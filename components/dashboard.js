@@ -5,10 +5,9 @@ import AccountActions from "./cards/AccountActions";
 import Transactions from "./cards/transactions";
 import User from "./cards/User";
 import { AppContext } from "@/context/AppContext";
-import { useRouter } from "next/navigation";
 import { getDoc, doc } from "firebase/firestore";
 import { database } from "@/config/firebase";
-import Logout from "./Logout";
+import LoadingSpinner from "./Loader";
 
 const transactionData = [
   { id: 1, amount: 1000, type: "Withdrawal", date: "oct 24", status: "failed" },
@@ -24,26 +23,36 @@ const transactionData = [
   { id: 5, amount: 2000, type: "Deposite", date: "oct 20", status: "Approved" },
 ];
 export default function Dashboard() {
-  const { user } = useContext(AppContext);
+  const { user, isLoading, setIsLoading } = useContext(AppContext);
   const [userData, setUserData] = useState({});
-  const router = useRouter();
+
   useEffect(() => {
-    if (!user) return;
+    if (!user) {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
+      return;
+    }
     async function getUserData() {
       try {
         const docRef = doc(database, "users", user.uid);
         const data = await getDoc(docRef);
         setUserData(data.data());
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 400);
       } catch (error) {
         console.error(error);
       }
     }
     getUserData();
   }, [user]);
-  
+
   return (
     <>
-      {user ? (
+      {isLoading && <LoadingSpinner />}
+
+      {user && (
         <div className="w-full px-2">
           <User
             name={userData?.name || ""}
@@ -57,9 +66,8 @@ export default function Dashboard() {
           <AccountActions />
           <Transactions transactions={transactionData} />
         </div>
-      ) : (
-        <p></p>
       )}
+      {!user && !isLoading && <p className="text-center font-semibold mt-12">You are not logged it </p>}
     </>
   );
 }
