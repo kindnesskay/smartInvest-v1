@@ -5,15 +5,19 @@ import { AppContext } from "@/context/AppContext";
 import { doc, updateDoc } from "firebase/firestore";
 import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
+import LoadingSpinner from "../Loader";
+import { useRouter } from "next/navigation";
 
 export default function EditProfile() {
-  const { user } = useContext(AppContext);
+  const { user, isLoading, setIsLoading } = useContext(AppContext);
   const [name, setName] = useState("");
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
-  const [status, setStatus] = useState(false);
+  const [status, setStatus] = useState(null);
+
   const handleDone = async () => {
     if (!name) return;
+    setIsLoading(true);
     try {
       const userRef = doc(database, "users", user.uid);
       await updateDoc(userRef, {
@@ -22,15 +26,41 @@ export default function EditProfile() {
       setImage(null);
       setImageUrl(null);
       setName("");
+      setIsLoading(false);
+      setStatus(true);
     } catch (error) {
       console.error(error);
+      setIsLoading(false);
+      setStatus(false);
+    }finally{
+      setTimeout(() => {
+        setStatus(null)
+      }, 2000);
     }
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
   return (
     <>
-      {user !== null ? (
+      {isLoading && <LoadingSpinner />}
+      {user !== null && (
         <div className="p-2">
+          <div
+            className={`h-8  flex absolute font-semibold items-center p-2 w-24 justify-center text-white rounded-lg ${
+              status === true
+                ? "bg-green-600"
+                : status === false
+                ? "bg-red-600"
+                : "hidden"
+            }`}
+          >
+            {status === true && <p>success</p>}
+            {status === false && <p>failed</p>}
+          </div>
           <p className="text-center font-semibold font-mono">Edit Profile</p>
           <div className="flex flex-col items-center gap-4 pt-4">
             <div className="overflow-hidden rounded-full h-fit w-fit relative">
@@ -70,8 +100,9 @@ export default function EditProfile() {
             </div>
           </div>
         </div>
-      ) : (
-        <p></p>
+      )}
+      {!user && !isLoading && (
+        <p className="text-center font-semibold mt-12">You are not logged it</p>
       )}
     </>
   );

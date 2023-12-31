@@ -13,11 +13,14 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [verifyPwd, setVerfyPwd] = useState("");
   const [pwd_error, setPwdError] = useState("");
-  const { user, setUser } = useContext(AppContext);
+  const { user, setUser,setIsLoading } = useContext(AppContext);
   useEffect(() => {
     if (user !== null) {
       router.push('/dashboard')
     }
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
   }, []);
   const createUserDoc=async(id)=>{
     const usersRef=collection(database,'users')
@@ -47,6 +50,7 @@ function SignUp() {
       return;
     }
     setPwdError("");
+    setIsLoading(true)
     await createUserWithEmailAndPassword(Auth, email, password)
       .then(async (userCredential) => {
         const user = userCredential.user;
@@ -56,6 +60,7 @@ function SignUp() {
       })
       .catch((error) => {
         console.log(error.code);
+        setIsLoading(false)
       });
   };
   return (

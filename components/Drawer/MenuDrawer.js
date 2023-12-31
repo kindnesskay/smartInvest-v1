@@ -21,7 +21,7 @@ export default function MenuDrawer() {
         <div className="w-full backdrop-blur-sm h-full absolute top-0 left-0"></div>
       )}
 
-      <ul
+      <div
         className={`${
           !menuState
             ? "w-0 hidden"
@@ -43,10 +43,11 @@ export default function MenuDrawer() {
         </div>
         {sidebarLinks.map((link) => {
           return (
-            <li
+            <Link
+              href={link.route}
               onClick={() => setMenuSate(false)}
               key={link.label}
-              className="flex gap-2 p-4 bg-blue-500 rounded-lg"
+              className="font-bold font-mono text-white flex gap-2 p-4 bg-blue-500 rounded-lg"
             >
               <Image
                 height={24}
@@ -54,17 +55,12 @@ export default function MenuDrawer() {
                 alt={link.label}
                 src={link.imgURL}
               />
-              <Link
-                href={link.route}
-                className="font-bold font-mono text-white"
-              >
-                {link.label}
-              </Link>
-            </li>
+              {link.label}
+            </Link>
           );
         })}
         <Logout />
-      </ul>
+      </div>
     </div>
   );
 }
