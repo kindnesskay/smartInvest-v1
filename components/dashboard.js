@@ -9,19 +9,6 @@ import { getDoc, doc } from "firebase/firestore";
 import { database } from "@/config/firebase";
 import LoadingSpinner from "./Loader";
 
-const transactionData = [
-  { id: 1, amount: 1000, type: "Withdrawal", date: "oct 24", status: "failed" },
-  { id: 2, amount: 2000, type: "Withdrawal", date: "nov 14", status: "failed" },
-  { id: 3, amount: 3000, type: "Withdrawal", date: "jan 4", status: "failed" },
-  {
-    id: 4,
-    amount: 10000,
-    type: "Deposite",
-    date: "oct 22",
-    status: "Approved",
-  },
-  { id: 5, amount: 2000, type: "Deposite", date: "oct 20", status: "Approved" },
-];
 export default function Dashboard() {
   const { user, isLoading, setIsLoading } = useContext(AppContext);
   const [userData, setUserData] = useState({});
@@ -64,7 +51,7 @@ export default function Dashboard() {
             percentage={10}
           />
           <AccountActions />
-          <Transactions transactions={transactionData} />
+          <Transactions/>
         </div>
       )}
       {!user && !isLoading && <p className="text-center font-semibold mt-12">You are not logged it </p>}

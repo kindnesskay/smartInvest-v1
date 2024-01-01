@@ -56,28 +56,28 @@ function SignIn() {
         </p>
         <label htmlFor="email" className="text-md font-semibold ">
           Email
-        </label>
         <input
           name="email"
-          className="w-full text-center h-12 text-xl text-gray-700 text-md rounded-2xl border border-solid border-gray-400 p-2"
+          className="w-full text-center h-12 text-xl text-gray-700 text-md rounded-lg border border-solid border-gray-400 p-2"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-        />
+          />
+          </label>
         <span>{emailError}</span>
         <label htmlFor="password" className="text-md font-semibold">
           Password
-        </label>
         <input
-          className="text-center w-full text-gray-700 h-12  text-xl text-md rounded-2xl border border-solid border-gray-400 p-2"
+          className="text-center w-full text-gray-700 h-12  text-xl text-md rounded-lg border border-solid border-gray-400 p-2"
           type="password"
           name="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-        />
+          />
+          </label>
         <span>{passwordError}</span>
         <button
           onClick={handleSignIn}
-          className="bg-blue-700 text-white h-12 p-2 w-full rounded-2xl font-semibold text-xl"
+          className="bg-blue-700 text-white h-12 p-2 w-full rounded-lg font-semibold text-xl"
         >
           LogIn
         </button>

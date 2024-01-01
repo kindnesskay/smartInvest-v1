@@ -64,7 +64,7 @@ function SignUp() {
       });
   };
   return (
-    <section className="p-2 flex flex-col justify-center items-center h-screen lg:flex-row">
+    <section className="p-4 flex flex-col justify-center items-center h-screen lg:flex-row">
         <div className="flex w-32 h-32 lg:h-full justify-center lg:w-1/2 ">
           <Image
             width={500}
@@ -79,38 +79,38 @@ function SignUp() {
 
         <label htmlFor="email" className="text-md font-semibold ">
           Email
-        </label>
         <input
           name="email"
-          className="text-center w-full text-gray-700 h-12  text-xl text-md rounded-2xl border border-solid border-gray-400 p-2"
+          className="text-center w-full text-gray-700 h-12  text-xl text-md rounded-lg border border-solid border-gray-400 p-2"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-        />
+          />
+          </label>
         <label htmlFor="password" className="text-md font-semibold ">
           Password
-        </label>
         <input
-          className="text-center w-full text-gray-700 h-12  text-xl text-md rounded-2xl border border-solid border-gray-400 p-2"
+          className="text-center w-full text-gray-700 h-12  text-xl text-md rounded-lg border border-solid border-gray-400 p-2"
           name="password"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-        />
+          />
+          </label>
         <label htmlFor="verifypassword" className="text-md font-semibold ">
           Verify password
-        </label>
         <input
-          className="text-center w-full text-gray-700 h-12  text-xl text-md rounded-2xl border border-solid border-gray-400 p-2"
+          className="text-center w-full text-gray-700 h-12  text-xl text-md rounded-lg border border-solid border-gray-400 p-2"
           name="verifypassword"
           type="password"
           value={verifyPwd}
           onChange={(e) => setVerfyPwd(e.target.value)}
-        />
+          />
+          </label>
         <span>{pwd_error}</span>
 
         <button
           onClick={handleSignUp}
-          className="bg-blue-700 text-white h-12 p-2 w-full rounded-2xl font-semibold text-xl"
+          className="bg-blue-700 text-white h-12 p-2 w-full rounded-lg font-semibold text-xl"
         >
           Sign up
         </button>

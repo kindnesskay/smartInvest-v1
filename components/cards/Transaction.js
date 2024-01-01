@@ -14,7 +14,7 @@ export default function Transaction({ amount, type, status, date }) {
         </p>
         <p
           className={`text-sm font-semibold ${
-            status == "Approved" ? "text-green-500" : "text-red-500"
+            status == "success" ? "text-green-500" :status=="failed" ?"text-red-500":'text-yellow-500'
           }`}
         >
           {status}
